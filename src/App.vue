@@ -1,16 +1,9 @@
 <template>
-  <index />
+  <ai2 />
 </template>
 
 <script setup lang="ts">
-import index from './views/index.vue';
+import ai2 from '../src/views/index2.vue'
 </script>
 
-<style>
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-</style>
+<style></style>
