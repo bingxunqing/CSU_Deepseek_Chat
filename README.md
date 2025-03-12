@@ -5,7 +5,7 @@
 
 该项目保存本地后，先运行 npm install 再运行 npm run dev 
 
-页面全部代码都在views/index.vue，然后通过组件的方式在app.vue引入
+页面全部代码都在/src/commponent/，然后通过组件的方式在/views/index2.vue引入
 
 目前进度：完成基本框架的构建  
 
