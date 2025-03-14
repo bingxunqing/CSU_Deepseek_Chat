@@ -6,9 +6,29 @@
       <div class="app-logo">
         <img src="../assets/logo.png" alt="Logo" />
       </div>
+      <div class="header-right">
+        <!-- <el-button type="text">
+          <el-icon>
+            <Setting />
+          </el-icon>
+        </el-button> -->
+        <el-dropdown trigger="click" @command="logout()">
+          <el-button type="text">
+            <el-icon>
+              <Setting />
+            </el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="rename">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <el-avatar :size="32" :src="userAvatar"></el-avatar>
+      </div>
     </div>
 
-    <div class="content-wrapper">
+    <div :class="{ 'content-wrapper': !sidebarCollapsed, 'content-wrapper-collapse': sidebarCollapsed }">
       <!-- 侧边栏 -->
       <div class="sidebar" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
         <div class="sidebar-header">
@@ -19,25 +39,22 @@
             <!-- 今天 -->
             <div v-if="todayChats.length" class="time-group">
               <div class="time-group-title">今天</div>
-              <div
-                v-for="(chat, index) in todayChats"
-                :key="chat.id"
-                class="conversation-item"
+              <div v-for="(chat, index) in todayChats" :key="chat.id" class="conversation-item"
                 :class="{ active: currentChatIndex === getGlobalIndex(chat) }"
-                @click="switchChat(getGlobalIndex(chat))"
-              >
+                @click="switchChat(getGlobalIndex(chat))">
                 <el-tooltip :content="chat.title" placement="right" :show-after="1000">
                   <div class="conversation-title">
-                    <el-icon><ChatRound /></el-icon>
+                    <el-icon>
+                      <ChatRound />
+                    </el-icon>
                     <span>{{ chat.title }}</span>
                   </div>
                 </el-tooltip>
                 <div class="conversation-actions">
-                  <el-dropdown
-                    trigger="click"
-                    @command="handleCommand($event, getGlobalIndex(chat))"
-                  >
-                    <el-icon><MoreFilled /></el-icon>
+                  <el-dropdown trigger="click" @command="handleCommand($event, getGlobalIndex(chat))">
+                    <el-icon>
+                      <MoreFilled />
+                    </el-icon>
                     <template #dropdown>
                       <el-dropdown-menu>
                         <el-dropdown-item command="rename">重命名</el-dropdown-item>
@@ -52,25 +69,22 @@
             <!-- 昨天 -->
             <div v-if="yesterdayChats.length" class="time-group">
               <div class="time-group-title">昨天</div>
-              <div
-                v-for="(chat, index) in yesterdayChats"
-                :key="chat.id"
-                class="conversation-item"
+              <div v-for="(chat, index) in yesterdayChats" :key="chat.id" class="conversation-item"
                 :class="{ active: currentChatIndex === getGlobalIndex(chat) }"
-                @click="switchChat(getGlobalIndex(chat))"
-              >
+                @click="switchChat(getGlobalIndex(chat))">
                 <el-tooltip :content="chat.title" placement="right" :show-after="1000">
                   <div class="conversation-title">
-                    <el-icon><ChatRound /></el-icon>
+                    <el-icon>
+                      <ChatRound />
+                    </el-icon>
                     <span>{{ chat.title }}</span>
                   </div>
                 </el-tooltip>
                 <div class="conversation-actions">
-                  <el-dropdown
-                    trigger="click"
-                    @command="handleCommand($event, getGlobalIndex(chat))"
-                  >
-                    <el-icon><MoreFilled /></el-icon>
+                  <el-dropdown trigger="click" @command="handleCommand($event, getGlobalIndex(chat))">
+                    <el-icon>
+                      <MoreFilled />
+                    </el-icon>
                     <template #dropdown>
                       <el-dropdown-menu>
                         <el-dropdown-item command="rename">重命名</el-dropdown-item>
@@ -85,25 +99,22 @@
             <!-- 七天前 -->
             <div v-if="weekChats.length" class="time-group">
               <div class="time-group-title">七天前</div>
-              <div
-                v-for="(chat, index) in weekChats"
-                :key="chat.id"
-                class="conversation-item"
+              <div v-for="(chat, index) in weekChats" :key="chat.id" class="conversation-item"
                 :class="{ active: currentChatIndex === getGlobalIndex(chat) }"
-                @click="switchChat(getGlobalIndex(chat))"
-              >
+                @click="switchChat(getGlobalIndex(chat))">
                 <el-tooltip :content="chat.title" placement="right" :show-after="1000">
                   <div class="conversation-title">
-                    <el-icon><ChatRound /></el-icon>
+                    <el-icon>
+                      <ChatRound />
+                    </el-icon>
                     <span>{{ chat.title }}</span>
                   </div>
                 </el-tooltip>
                 <div class="conversation-actions">
-                  <el-dropdown
-                    trigger="click"
-                    @command="handleCommand($event, getGlobalIndex(chat))"
-                  >
-                    <el-icon><MoreFilled /></el-icon>
+                  <el-dropdown trigger="click" @command="handleCommand($event, getGlobalIndex(chat))">
+                    <el-icon>
+                      <MoreFilled />
+                    </el-icon>
                     <template #dropdown>
                       <el-dropdown-menu>
                         <el-dropdown-item command="rename">重命名</el-dropdown-item>
@@ -118,25 +129,22 @@
             <!-- 更早 -->
             <div v-if="olderChats.length" class="time-group">
               <div class="time-group-title">更早</div>
-              <div
-                v-for="(chat, index) in olderChats"
-                :key="chat.id"
-                class="conversation-item"
+              <div v-for="(chat, index) in olderChats" :key="chat.id" class="conversation-item"
                 :class="{ active: currentChatIndex === getGlobalIndex(chat) }"
-                @click="switchChat(getGlobalIndex(chat))"
-              >
+                @click="switchChat(getGlobalIndex(chat))">
                 <el-tooltip :content="chat.title" placement="right" :show-after="1000">
                   <div class="conversation-title">
-                    <el-icon><ChatRound /></el-icon>
+                    <el-icon>
+                      <ChatRound />
+                    </el-icon>
                     <span>{{ chat.title }}</span>
                   </div>
                 </el-tooltip>
                 <div class="conversation-actions">
-                  <el-dropdown
-                    trigger="click"
-                    @command="handleCommand($event, getGlobalIndex(chat))"
-                  >
-                    <el-icon><MoreFilled /></el-icon>
+                  <el-dropdown trigger="click" @command="handleCommand($event, getGlobalIndex(chat))">
+                    <el-icon>
+                      <MoreFilled />
+                    </el-icon>
                     <template #dropdown>
                       <el-dropdown-menu>
                         <el-dropdown-item command="rename">重命名</el-dropdown-item>
@@ -151,46 +159,37 @@
         </div>
         <div class="sidebar-footer">
           <el-button type="primary" @click="createNewChat" class="new-chat-btn">
-            <el-icon><Plus /></el-icon>
+            <el-icon>
+              <Plus />
+            </el-icon>
             <span>新建对话</span>
           </el-button>
         </div>
       </div>
 
       <!-- 主内容区 -->
-      <div class="main-content">
+      <div class="main-content" :class="{ 'main-content-collapse': sidebarCollapsed }">
         <div class="main-header">
           <div class="header-left">
             <div class="toggle-sidebar" @click="toggleSidebar">
-              <el-icon><Fold v-if="!sidebarCollapsed" /><Expand v-else /></el-icon>
+              <el-icon>
+                <Fold v-if="!sidebarCollapsed" />
+                <Expand v-else />
+              </el-icon>
             </div>
-            <div class="app-title">中南大学deepseek模型</div>
-          </div>
-          <div class="header-right">
-            <el-button type="text">
-              <el-icon><Setting /></el-icon>
-            </el-button>
-            <el-avatar :size="32" :src="userAvatar"></el-avatar>
+            <div class="app-title">中南大学DeepSeek</div>
           </div>
         </div>
 
         <div class="chat-container" ref="chatContainerRef">
           <div class="chat-messages">
             <template v-if="currentChat && currentChat.messages.length > 0">
-              <div
-                v-for="(message, msgIndex) in currentChat.messages"
-                :key="msgIndex"
-                class="message-wrapper"
-                :class="{
-                  'user-message': message.sender === 'user',
-                  'ai-message': message.sender === 'ai',
-                }"
-              >
+              <div v-for="(message, msgIndex) in currentChat.messages" :key="msgIndex" class="message-wrapper" :class="{
+          'user-message': message.sender === 'user',
+          'ai-message': message.sender === 'ai',
+        }">
                 <div class="message-avatar">
-                  <el-avatar
-                    :size="40"
-                    :src="message.sender === 'user' ? userAvatar : aiAvatar"
-                  ></el-avatar>
+                  <el-avatar :size="40" :src="message.sender === 'user' ? userAvatar : aiAvatar"></el-avatar>
                 </div>
                 <div class="message-content">
                   <div class="message-bubble">
@@ -202,7 +201,9 @@
             </template>
             <div v-else class="empty-chat">
               <div class="empty-chat-content">
-                <el-icon :size="48"><ChatLineRound /></el-icon>
+                <el-icon :size="48">
+                  <ChatLineRound />
+                </el-icon>
                 <p>开始一个新的对话吧</p>
               </div>
             </div>
@@ -211,28 +212,22 @@
 
         <div class="input-container">
           <div class="input-wrapper">
-            <div class="attachment-btn">
-              <el-button type="text">
-                <el-icon><Paperclip /></el-icon>
-              </el-button>
-            </div>
             <div class="message-input">
-              <el-input
-                v-model="inputMessage"
-                type="text"
-                placeholder="输入消息..."
-                @keyup.enter="sendMessage"
-                :disabled="isSending"
-              />
+              <el-input v-model="inputMessage" type="textarea" :rows="1" placeholder="请输入消息..."
+                @keyup.enter="sendMessage" :disabled="isSending" resize="none" class="modern-input" />
             </div>
             <div class="send-btn">
-              <el-button
-                type="primary"
-                circle
-                @click="sendMessage"
-                :disabled="!inputMessage.trim() || isSending"
-              >
-                <el-icon><Position /></el-icon>
+              <el-button type="text" class="attachment-btn" @click="triggerFileInput">
+                <el-icon :size="24">
+                  <Paperclip />
+                </el-icon>
+              </el-button>
+              <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload" />
+              <el-button type="primary" round @click="sendMessage" :disabled="!inputMessage.trim() || isSending"
+                class="modern-send-btn">
+                <el-icon>
+                  <Position />
+                </el-icon>
               </el-button>
             </div>
           </div>
@@ -240,12 +235,7 @@
       </div>
     </div>
 
-    <el-dialog
-      v-model="renameDialogVisible"
-      title="重命名对话"
-      width="30%"
-      :before-close="handleDialogClose"
-    >
+    <el-dialog v-model="renameDialogVisible" title="重命名对话" width="30%" :before-close="handleDialogClose">
       <el-input v-model="newChatTitle" placeholder="请输入对话名称" />
       <template #footer>
         <span class="dialog-footer">
@@ -281,6 +271,9 @@ const sidebarCollapsed = ref(false)
 const toggleSidebar = () => {
   sidebarCollapsed.value = !sidebarCollapsed.value
 }
+
+//输入文件
+const fileInput = ref(null)
 
 // 聊天记录
 const chatHistory = ref([
@@ -331,7 +324,7 @@ const chatHistory = ref([
   },
   {
     id: 3,
-    title: '12',
+    title: '吃货',
     createdAt: Date.now() - 7 * 24 * 60 * 60 * 1000, // 7天前
     messages: [
       {
@@ -353,7 +346,7 @@ const chatHistory = ref([
   },
   {
     id: 4,
-    title: '123',
+    title: '老吃货',
     createdAt: Date.now() - 10 * 24 * 60 * 60 * 1000, // 10天前
     messages: [
       {
@@ -489,7 +482,7 @@ function handleCommand(command, index) {
       .then(() => {
         deleteChat(index)
       })
-      .catch(() => {})
+      .catch(() => { })
   }
 }
 
@@ -529,6 +522,55 @@ function handleDialogClose() {
   renameDialogVisible.value = false
 }
 
+//退出登录
+function logout() {
+  alert('您已经退出登录！')
+  window.close()
+}
+
+// 触发文件选择
+function triggerFileInput() {
+  fileInput.value.click()
+}
+
+// 处理文件上传
+function handleFileUpload(event) {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const userMsg = {
+      sender: 'user',
+      content: inputMessage.value || '已上传文件',
+      time: formatTime(new Date()),
+      file: {
+        name: file.name,
+        url: e.target.result, // Data URL，可用于预览，展示逻辑需要后续修改
+        type: file.type,
+      },
+    }
+    chatHistory.value[currentChatIndex.value].messages.push(userMsg)
+    inputMessage.value = ''
+    scrollToBottom()
+
+    // 模拟 AI 回复
+    isSending.value = true
+    setTimeout(() => {
+      const aiResponse = {
+        sender: 'ai',
+        content: `已收到你的文件：${file.name}，有什么我可以帮忙的吗？`,
+        time: formatTime(new Date()),
+      }
+      chatHistory.value[currentChatIndex.value].messages.push(aiResponse)
+      isSending.value = false
+      scrollToBottom()
+    }, 1000)
+  }
+  reader.readAsDataURL(file)
+  event.target.value = '' // 清空 input 以便重复选择同一文件
+}
+
 // 发送消息
 function sendMessage() {
   if (!inputMessage.value.trim() || isSending.value) return
@@ -543,7 +585,6 @@ function sendMessage() {
   const sentMessage = inputMessage.value
   inputMessage.value = ''
   scrollToBottom()
-
   isSending.value = true
   setTimeout(() => {
     const aiResponse = {
@@ -598,22 +639,25 @@ onMounted(() => {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background-color: #f0f2f5;
+  /* background-color: #f0f2f5; */
+  background: url(../assets/background.svg);
 }
 
 .app-header {
-  height: 50px;
-  background-color: #fff;
+  height: 62px;
+  margin-top: 6px;
+  /* background-color: #fff; */
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #e4e7ed;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .app-logo {
-  height: 100px;
+  height: 100%;
   width: 170px;
+  margin-left: 3%;
 }
 
 .app-logo img {
@@ -626,17 +670,47 @@ onMounted(() => {
   display: flex;
   flex: 1;
   overflow: hidden;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.content-wrapper-collapse {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .sidebar {
-  width: 280px;
-  height: 100%;
+  width: 19%;
+  height: 97%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-right: 1px solid #e4e7ed;
+  background-color: rgba(249, 249, 249, 0.8);
   transition: width 0.3s;
   overflow: hidden;
+  margin-left: 0.45%;
+  border-radius: 18px;
+}
+
+@media screen and (max-width: 800px) {
+  .sidebar {
+    width: 0;
+  }
+
+  .main-content {
+    flex: 1;
+    transition: width 0.3s;
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 .sidebar-collapsed {
@@ -671,7 +745,11 @@ onMounted(() => {
 }
 
 .time-group {
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .time-group-title {
@@ -680,17 +758,24 @@ onMounted(() => {
   font-size: 14px;
   font-weight: 500;
   border-bottom: 1px solid #e4e7ed;
+  align-self: flex-start;
+  margin-bottom: 2px;
+  overflow: hidden;
 }
 
 .conversation-item {
+  width: 75%;
   padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   transition: background-color 0.3s;
-  border-radius: 4px;
-  margin: 0 4px;
+  margin: 4px 4px;
+  border: 1px solid white;
+  border-radius: 20px;
+  background-color: #fff;
+  overflow: hidden;
 }
 
 .conversation-item:hover {
@@ -716,6 +801,7 @@ onMounted(() => {
 }
 
 .conversation-actions {
+  margin-left: 4px;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -729,24 +815,36 @@ onMounted(() => {
 }
 
 .sidebar-footer {
+  display: flex;
+  justify-content: center;
   padding: 16px;
   border-top: 1px solid #e4e7ed;
 }
 
 .new-chat-btn {
-  width: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
   gap: 8px;
 }
 
 .main-content {
-  flex: 1;
+  width: 78%;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 97%;
   overflow: hidden;
+  margin-right: 0.45%;
+  border-radius: 18px;
+  transition: width 0.3s;
+}
+
+.main-content-collapse {
+  width: 100%;
+  margin-left: 2.5%;
+  margin-right: 2.95%;
 }
 
 .main-header {
@@ -754,7 +852,6 @@ onMounted(() => {
   padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: #fff;
   border-bottom: 1px solid #e4e7ed;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -792,13 +889,16 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-right: 3%;
 }
 
 .chat-container {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 0.7);
+  /* background-color: #f9f9f9; */
+
 }
 
 .chat-messages {
@@ -812,7 +912,7 @@ onMounted(() => {
 .message-wrapper {
   display: flex;
   gap: 12px;
-  max-width: 80%;
+  max-width: 70%;
 }
 
 .user-message {
@@ -878,26 +978,82 @@ onMounted(() => {
 }
 
 .input-container {
-  padding: 16px 20px;
-  background-color: #fff;
-  border-top: 1px solid #e4e7ed;
+  height: 8%;
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: rgba(249, 249, 249, 0.7);
 }
 
 .input-wrapper {
   max-width: 900px;
+  height: 75%;
   margin: 0 auto;
+  padding-left: 1%;
+  padding-right: 1%;
   display: flex;
   align-items: center;
   gap: 12px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s;
+}
+
+.input-wrapper:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .message-input {
   flex: 1;
 }
 
+.modern-input {
+  border: none;
+  background: transparent;
+}
+
+.modern-input :deep(.el-textarea__inner) {
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #303133;
+  box-shadow: none;
+}
+
+.modern-input :deep(.el-textarea__inner:focus) {
+  outline: none;
+}
+
 .send-btn {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.attachment-btn {
+  margin-right: 0;
+  transition: color 0.3s;
+}
+
+.attachment-btn:hover {
+  color: #409eff;
+}
+
+.modern-send-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.modern-send-btn:hover {
+  transform: scale(1.05);
+}
+
+/* .send-btn {
+  flex-shrink: 0;
+} */
 
 .dialog-footer {
   display: flex;
